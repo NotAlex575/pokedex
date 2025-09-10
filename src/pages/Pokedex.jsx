@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const Pokedex = () => {
   const [pokemons, setPokemons] = useState([]);
+  const [searchPokemon, setSearchPokemon] = useState("");
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
@@ -23,10 +24,23 @@ const Pokedex = () => {
 
   if (pokemons.length === 0) return <div className="text-center mt-5">Loading....</div>;
 
+  const filteredPokemonName = pokemons.filter((pokemon) =>{
+        return pokemon.name.toLowerCase().includes(searchPokemon.toLowerCase())
+  })
+
   return (
     <div className="container my-4">
+      <div className="input-group mb-5 border">
+        <input 
+        type="text" 
+        placeholder="cerca pokemon per nome"
+        className=""
+        value={searchPokemon}
+        onChange={(event) => setSearchPokemon(event.target.value)}
+        />
+      </div>
       <div className="row gy-4">
-        {pokemons.sort((a, b) => a.id - b.id)
+        {filteredPokemonName.sort((a, b) => a.id - b.id)
             .map((pokemon) => (
             <div key={pokemon.id} className="col-12">
                 <div className="card border-danger shadow-lg poke-card d-flex flex-row align-items-center">
