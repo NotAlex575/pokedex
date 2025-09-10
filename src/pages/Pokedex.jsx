@@ -1,41 +1,57 @@
 import { useEffect, useState } from "react";
 
 const Pokedex = () => {
-  const [pokemon, setPokemon] = useState(null);
+  const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon/1")
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then(res => res.json())
-      .then(data => setPokemon(data))
+      .then(data => {
+        data.results.forEach(pokemon => {
+          fetch(pokemon.url)
+            .then(res => res.json())
+            .then(details => {
+              // Aggiungi solo se non è già presente
+              setPokemons(prev =>
+                prev.find(p => p.id === details.id) ? prev : [...prev, details]
+              );
+            });
+        });
+      });
   }, []);
 
-  if (!pokemon) return <div>Loading....</div>;
+  if (pokemons.length === 0) return <div className="text-center mt-5">Loading....</div>;
 
   return (
-    <>
-      <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="card border-danger shadow-lg w-35">
-          <img
-            className="card-img-top p-3 img-fluid mx-auto d-block"
-            src={pokemon.sprites.front_default}
-            alt={pokemon.name}
-          />
-          <div className="card-body text-center">
-            <h2 className="card-title text-capitalize fs-2">{pokemon.name}</h2>
-            <div>
-              {pokemon.types.map(({ type }) => (
-                <span
-                  key={type.name}
-                  className="badge bg-danger text-capitalize mx-2 fs-5"
-                >
-                  {type.name}
-                </span>
-              ))}
+    <div className="container my-4">
+      <div className="row gy-4">
+        {pokemons.sort((a, b) => a.id - b.id)
+            .map((pokemon) => (
+            <div key={pokemon.id} className="col-12">
+                <div className="card border-danger shadow-lg poke-card d-flex flex-row">
+                    
+                    <div className="p-3 d-flex align-items-center">
+                        <img
+                            className="poke-img"
+                            src={pokemon.sprites.front_default}
+                            alt={pokemon.name}
+                        />
+                    </div>
+                    <div className="card-body text-start d-flex flex-column justify-content-center">
+                    <h2 className="card-title text-capitalize fs-2">{pokemon.name}</h2>
+                    <div>
+                        {pokemon.types.map(({ type }) => (
+                        <span key={type.name} className="badge bg-danger text-capitalize mx-1 fs-6">
+                            {type.name}
+                        </span>
+                        ))}
+                    </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

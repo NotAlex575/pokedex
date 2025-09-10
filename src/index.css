@@ -1,3 +1,14 @@
 .w-35{
     width: 35%
 }
+
+.poke-card {
+  width: 80%;
+  height: 200px;
+  margin: 0 auto;
+}
+.poke-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
