@@ -29,9 +29,14 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link">
-                  Pokedex
-                </a>
+                <NavLink
+                  to="/pokedex"
+                  className={({ isActive }) =>
+                    isActive ? "nav-link fw-bold" : "nav-link"
+                  }
+                >
+                Pokedex
+                </NavLink>
               </li>
             </ul>
           </div>

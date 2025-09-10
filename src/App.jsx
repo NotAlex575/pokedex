@@ -3,7 +3,7 @@ import Defaultlayout from "./layouts/Defaultlayout"
 //import che servono per il routing
 import Homepage from "./pages/Homepage"
 import About from "./pages/About"
-//import Pokedex from "./pages/Pokedex"
+import Pokedex from "./pages/Pokedex"
 //import PokemonSingle from "./pages/PokemonSingle"*/
 //SERVIZIO ROUTING
 import { BrowserRouter, Routes, Route } from "react-router-dom" 
@@ -15,6 +15,7 @@ function App() {
         <Route element={<Defaultlayout></Defaultlayout>}>
           <Route path="/" element={<Homepage></Homepage>}></Route>
           <Route path="/about" element={<About></About>}></Route>
+          <Route path="/pokedex" element={<Pokedex></Pokedex>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
