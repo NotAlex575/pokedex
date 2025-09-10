@@ -2,13 +2,21 @@
     width: 35%
 }
 
+.bg-red{
+    background-color: red;
+}
+
+.bg-aqua{
+    background-color: aqua;
+}
+
 .poke-card {
-  width: 80%;
-  height: 200px;
-  margin: 0 auto;
+    width: 80%;
+    height: 200px;
+    margin: 0 auto;
 }
 .poke-img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
+    height: 100%;
+    width: auto;
+    object-fit: contain;
 }
