@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Pokedex = () => {
   const [pokemons, setPokemons] = useState([]);
   const [searchPokemon, setSearchPokemon] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
@@ -24,23 +25,52 @@ const Pokedex = () => {
 
   if (pokemons.length === 0) return <div className="text-center mt-5">Loading....</div>;
 
-  const filteredPokemonName = pokemons.filter((pokemon) =>{
-        return pokemon.name.toLowerCase().includes(searchPokemon.toLowerCase())
-  })
+  const filteredPokemon = pokemons.filter((pokemon) => {
+    const query = searchPokemon.toLowerCase();
+    const matchName = pokemon.name.toLowerCase().includes(query);
+    const matchType = selectedType
+      ? pokemon.types.some(t => t.type.name === selectedType)
+      : true; // se non selezioni nulla, mostra tutti
+    return matchName && matchType;
+});
 
   return (
     <div className="container my-4">
-      <div className="input-group mb-5 border">
-        <input 
-        type="text" 
-        placeholder="cerca pokemon per nome"
-        className=""
-        value={searchPokemon}
-        onChange={(event) => setSearchPokemon(event.target.value)}
+      {/* Filtro pokemon per nome */}
+      <div className="input-group mb-5 border p-2">
+        <input
+          type="text"
+          placeholder="Cerca Pokémon per nome"
+          className="form-control me-5"
+          value={searchPokemon}
+          onChange={(event) => setSearchPokemon(event.target.value)}
         />
+        {/* Filtro pokemon per tipo*/}
+        <div className="dropdown">
+          <button class="btn btn-secondary dropdown-toggle me-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {selectedType || "Tipo"}
+          </button>
+          <ul className="dropdown-menu">
+            {pokemons
+              .flatMap(pokemon => pokemon.types.map(({ type }) => type.name))
+              .filter((typeName, index, allTypes) => allTypes.indexOf(typeName) === index) // tipi unici
+              .map((typeName) => (
+                <li key={typeName}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => setSelectedType(typeName)}
+                  >
+                    {typeName}
+                  </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+
+      {/* card di ogni pokemon (o dei pokemon filtrati) */}
       <div className="row gy-4">
-        {filteredPokemonName.sort((a, b) => a.id - b.id)
+        {filteredPokemon.sort((a, b) => a.id - b.id)
             .map((pokemon) => (
             <div key={pokemon.id} className="col-12">
                 <div className="card border-danger shadow-lg poke-card d-flex flex-row align-items-center">
