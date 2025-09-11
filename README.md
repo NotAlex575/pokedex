@@ -4,7 +4,7 @@ Un'applicazione web interattiva che permette di esplorare i Pokémon, visualizza
 
 _________________________________________________________________________________________________________________________________________________________________
 
-<strong>Tecnologie utilizzate</strong>
+<strong class="text-primary">Tecnologie utilizzate</strong>
 
 React: Libreria JavaScript per la costruzione dell'interfaccia utente.
 
@@ -21,7 +21,7 @@ ESLint: Strumento per il linting del codice JavaScript, per mantenere uno stile 
 
 _________________________________________________________________________________________________________________________________________________________________
 
-<strong>Installazione</strong>
+<strong class="text-primary">Installazione</strong>
 
 Clona il repository:
 
@@ -48,7 +48,7 @@ L'app sarà disponibile su http://localhost:5173
 
 _________________________________________________________________________________________________________________________________________________________________
 
-<strong>Funzionalità principali</strong>
+<strong class="text-primary">Funzionalità principali</strong>
 
 Visualizzazione Pokémon: Elenco di 151 Pokémon con nome, immagine e tipi.
 
@@ -60,7 +60,7 @@ Dettagli Pokémon: Cliccando su un Pokémon, si accede a una pagina con informaz
 
 _________________________________________________________________________________________________________________________________________________________________
 
-<strong>Struttura del progetto</strong>
+<strong class="text-primary">Struttura del progetto</strong>
 
 src/: Contiene tutti i file sorgente dell'applicazione.
 
@@ -82,7 +82,7 @@ README.md: Questo file.
 
 ___________________________________________________________________________________________________________________________________________________________________
 
-<strong>Dettagli tecnici</strong>
+<strong class="text-primary">Dettagli tecnici</strong>
 
 Gestione dello stato: Utilizzo di useState per gestire lo stato locale dell'applicazione.
 
